@@ -18,8 +18,7 @@
   ;; any value that includes +nan.0 should be a special value, but because
   ;; types and representations are not cleanly separated, this is not reasonable to
   ;; express. Once types and representations are separated, fix this.
-  '(+nan.0 +inf.0)
-  real->double-flonum)
+  '(+nan.0 +inf.0))
 
 (define-constant I complex
   [bf (λ () (bigcomplex 0.bf 1.bf))]
