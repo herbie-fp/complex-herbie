@@ -18,7 +18,7 @@ jobs:
         with:
           repository: uwplse/herbie
           path: herbie
-          branch: ${{ github.event.client_payload.branch }}
+          ref: ${{ github.event.client_payload.branch }}
       - name: "Install Herbie"
         run: raco pkg install --no-cache --auto --name herbie herbie/src/
       - name: "Install Complex Number support"
