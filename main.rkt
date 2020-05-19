@@ -2,9 +2,11 @@
 
 (require math/flonum math/bigfloat herbie/plugin "bigcomplex.rkt")
 
-(define-type complex (conjoin complex? (negate real?)) bigcomplex?)
+(define-type complex (complex? bigcomplex?)
+  complex->bigcomplex
+  bigcomplex->complex)
 
-(define-representation complex
+(define-representation (complex64 complex)
   (λ (x) (make-rectangular (bigfloat->flonum (bigcomplex-re x)) (bigfloat->flonum (bigcomplex-im x))))
   (λ (x) (bigcomplex (bf (real-part x)) (bf (imag-part x))))
   (λ (x) (make-rectangular (ordinal->flonum (quotient x (expt 2 64))) (ordinal->flonum (modulo x (expt 2 64)))))
