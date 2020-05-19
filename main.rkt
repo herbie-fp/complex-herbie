@@ -2,6 +2,8 @@
 
 (require math/flonum math/bigfloat herbie/plugin "bigcomplex.rkt")
 
+(eprintf "Loading complex number support...\n")
+
 (define-type complex (complex? bigcomplex?)
   complex->bigcomplex
   bigcomplex->complex)
