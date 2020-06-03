@@ -23,4 +23,4 @@ jobs:
         run: raco pkg install --no-cache --auto --name herbie herbie/src/
       - name: "Install Complex Number support"
         run: raco pkg install --no-cache --auto --name complex-herbie plugin/
-      - run: racket herbie/infra/travis.rkt plugin/test.fpcore
+      - run: racket herbie/infra/travis.rkt --seed 0 plugin/test.fpcore
