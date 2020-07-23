@@ -72,17 +72,17 @@
   [->tex (curry format "\\sqrt{~a}")]
   [nonffi sqrt])
 
-(define-operator (complex real real) complex
+(define-operator (complex binary64 binary64) complex
   [fl make-rectangular] [bf bigcomplex] [ival #f]
   [->tex (curry format "~a + ~a i")]
   [nonffi make-rectangular])
 
-(define-operator (re complex) real
+(define-operator (re complex) binary64
   [fl real-part] [bf bigcomplex-re] [ival #f]
   [->tex (curry format "\\Re(~a)")]
   [nonffi real-part])
 
-(define-operator (im complex) real
+(define-operator (im complex) binary64
   [fl imag-part] [bf bigcomplex-im] [ival #f]
   [->tex (curry format "\\Im(~a)")]
   [nonffi imag-part])
@@ -153,7 +153,7 @@
   [frac-2neg.c   (/.c a b)                  (/.c (neg.c a) (neg.c b))])
 
 (define-ruleset complex-number-basics (complex simplify)
-  #:type ([x real] [y real] [a real] [b real] [c real] [d real])
+  #:type ([x binary64] [y binary64] [a binary64] [b binary64] [c binary64] [d binary64])
   [real-part        (re (complex x y))     x]
   [imag-part        (im (complex x y))     y]
   [complex-add-def  (+.c (complex a b) (complex c d)) (complex (+ a c) (+ b d))]
