@@ -8,7 +8,13 @@
   complex->bigcomplex
   bigcomplex->complex)
 
-(define-representation (complex complex)
+(define (complex-nan? x)
+  (or (nan? (real-part x)) (nan? (imag-part x))))
+
+(define (complex-inf? x)
+  (or (infinite? (real-part x)) (infinite? (imag-part x))))
+
+(define-representation (complex complex complex?)
   (λ (x) (make-rectangular (bigfloat->flonum (bigcomplex-re x)) (bigfloat->flonum (bigcomplex-im x))))
   (λ (x) (bigcomplex (bf (real-part x)) (bf (imag-part x))))
   (λ (x) (make-rectangular (ordinal->flonum (quotient x (expt 2 64))) (ordinal->flonum (modulo x (expt 2 64)))))
@@ -18,7 +24,7 @@
   ;; any value that includes +nan.0 should be a special value, but because
   ;; types and representations are not cleanly separated, this is not reasonable to
   ;; express. Once types and representations are separated, fix this.
-  '(+nan.0 +inf.0))
+  (disjoin complex-nan? complex-inf?))
 
 (define-constant (I I) complex
   [bf (λ () (bigcomplex 0.bf 1.bf))]
