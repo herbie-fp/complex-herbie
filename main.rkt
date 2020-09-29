@@ -148,8 +148,8 @@
   [frac-times.c  (*.c (/.c a b) (/.c c d))  (/.c (*.c a c) (*.c b d))]
   [frac-2neg.c   (/.c a b)                  (/.c (neg.c a) (neg.c b))])
 
-(define-ruleset complex-number-basics (complex simplify)
-  #:type ([x binary64] [y binary64] [a binary64] [b binary64] [c binary64] [d binary64])
+(define-ruleset* complex-number-basics (complex simplify)
+  #:type ([x real] [y real] [a real] [b real] [c real] [d real])
   [real-part        (re (complex x y))     x]
   [imag-part        (im (complex x y))     y]
   [complex-add-def  (+.c (complex a b) (complex c d)) (complex (+ a c) (+ b d))]
