@@ -26,77 +26,68 @@
   ;; express. Once types and representations are separated, fix this.
   (disjoin complex-nan? complex-inf?))
 
-(define-constant (I I) complex
+;; Complex constants and ops
+
+(define-real-constant I
   [bf (λ () (bigcomplex 0.bf 1.bf))]
-  [fl (const 0+1i)]
   [nonffi (const 0+1i)]
-  [ival #f]
-  [->tex "i"])
+  [ival #f])
+
+(define-real-operator complex
+  [bf bigcomplex] [ival #f] [nonffi make-rectangular])
+
+(define-real-operator re
+  [bf bigcomplex-re] [ival #f] [nonffi real-part])
+
+(define-real-operator im
+  [bf bigcomplex-im] [ival #f] [nonffi imag-part])
+
+(define-real-operator conj
+  [bf bf-complex-conjugate] [ival #f] [nonffi conjugate])
+
+;; Implementations
+
+(define-constant (I I) complex
+  [fl (const 0+1i)])
 
 (define-operator (+ +.c complex complex) complex
-  [fl +] [bf bf-complex-add] [ival #f]
-  [->tex (curry format "~a + ~a")]
-  [nonffi +])
+  [fl +] [bf bf-complex-add] [ival #f])
 
 (define-operator (- neg.c complex) complex
-  [fl -] [bf bf-complex-neg] [ival #f]
-  [->tex (curry format "-~a")]
-  [nonffi -])
+  [fl -] [bf bf-complex-neg] [ival #f])
 
 (define-operator (- -.c complex complex) complex
-  [fl -] [bf bf-complex-sub] [ival #f]
-  [->tex (λ (x [y #f]) (if y (format "~a - ~a" x y) (format "-~a" x)))]
-  [nonffi -])
+  [fl -] [bf bf-complex-sub] [ival #f])
 
 (define-operator (* *.c complex complex) complex
-  [fl *] [bf bf-complex-mult] [ival #f]
-  [->tex (curry format "~a \\cdot ~a")]
-  [nonffi *])
+  [fl *] [bf bf-complex-mult] [ival #f])
 
 (define-operator (/ /.c complex complex) complex
-  [fl /] [bf bf-complex-div] [ival #f]
-  [->tex (curry format "\\frac{~a}{~a}")]
-  [nonffi /])
+  [fl /] [bf bf-complex-div] [ival #f])
 
 (define-operator (exp exp.c complex) complex
-  [fl exp] [bf bf-complex-exp] [ival #f]
-  [->tex (curry format "e^{~a}")]
-  [nonffi exp])
+  [fl exp] [bf bf-complex-exp] [ival #f])
 
 (define-operator (log log.c complex) complex
-  [fl log] [bf bf-complex-log] [ival #f]
-  [->tex (curry format "\\log ~a")]
-  [nonffi log])
+  [fl log] [bf bf-complex-log] [ival #f])
 
 (define-operator (pow pow.c complex complex) complex
-  [fl expt] [bf bf-complex-pow] [ival #f]
-  [->tex (curry format "{~a}^{~a}")]
-  [nonffi expt])
+  [fl expt] [bf bf-complex-pow] [ival #f])
 
 (define-operator (sqrt sqrt.c complex) complex
-  [fl sqrt] [bf bf-complex-sqrt] [ival #f]
-  [->tex (curry format "\\sqrt{~a}")]
-  [nonffi sqrt])
+  [fl sqrt] [bf bf-complex-sqrt] [ival #f])
 
 (define-operator (complex complex binary64 binary64) complex
-  [fl make-rectangular] [bf bigcomplex] [ival #f]
-  [->tex (curry format "~a + ~a i")]
-  [nonffi make-rectangular])
+  [fl make-rectangular])
 
 (define-operator (re re complex) binary64
-  [fl real-part] [bf bigcomplex-re] [ival #f]
-  [->tex (curry format "\\Re(~a)")]
-  [nonffi real-part])
+  [fl real-part])
 
 (define-operator (im im complex) binary64
-  [fl imag-part] [bf bigcomplex-im] [ival #f]
-  [->tex (curry format "\\Im(~a)")]
-  [nonffi imag-part])
+  [fl imag-part])
 
 (define-operator (conj conj complex) complex
-  [fl conjugate] [bf bf-complex-conjugate] [ival #f]
-  [->tex (curry format "\\overline{~a}")]
-  [nonffi conjugate])
+  [fl conjugate])
 
 (define-ruleset commutativity.c (arithmetic simplify fp-safe complex)
   #:type ([a complex] [b complex])
