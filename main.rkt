@@ -26,67 +26,67 @@
   ;; express. Once types and representations are separated, fix this.
   (disjoin complex-nan? complex-inf?))
 
-;; Complex constants and ops
+;; Abstract complex constants and ops
 
-(define-real-constant I
+(define-constant I
   [bf (λ () (bigcomplex 0.bf 1.bf))]
   [nonffi (const 0+1i)]
   [ival #f])
 
-(define-real-operator complex
+(define-operator complex
   [bf bigcomplex] [ival #f] [nonffi make-rectangular])
 
-(define-real-operator re
+(define-operator re
   [bf bigcomplex-re] [ival #f] [nonffi real-part])
 
-(define-real-operator im
+(define-operator im
   [bf bigcomplex-im] [ival #f] [nonffi imag-part])
 
-(define-real-operator conj
+(define-operator conj
   [bf bf-complex-conjugate] [ival #f] [nonffi conjugate])
 
 ;; Implementations
 
-(define-constant (I I) complex
+(define-constant-impl (I I) complex
   [fl (const 0+1i)])
 
-(define-operator (+ +.c complex complex) complex
+(define-operator-impl (+ +.c complex complex) complex
   [fl +] [bf bf-complex-add] [ival #f])
 
-(define-operator (- neg.c complex) complex
+(define-operator-impl (- neg.c complex) complex
   [fl -] [bf bf-complex-neg] [ival #f])
 
-(define-operator (- -.c complex complex) complex
+(define-operator-impl (- -.c complex complex) complex
   [fl -] [bf bf-complex-sub] [ival #f])
 
-(define-operator (* *.c complex complex) complex
+(define-operator-impl (* *.c complex complex) complex
   [fl *] [bf bf-complex-mult] [ival #f])
 
-(define-operator (/ /.c complex complex) complex
+(define-operator-impl (/ /.c complex complex) complex
   [fl /] [bf bf-complex-div] [ival #f])
 
-(define-operator (exp exp.c complex) complex
+(define-operator-impl (exp exp.c complex) complex
   [fl exp] [bf bf-complex-exp] [ival #f])
 
-(define-operator (log log.c complex) complex
+(define-operator-impl (log log.c complex) complex
   [fl log] [bf bf-complex-log] [ival #f])
 
-(define-operator (pow pow.c complex complex) complex
+(define-operator-impl (pow pow.c complex complex) complex
   [fl expt] [bf bf-complex-pow] [ival #f])
 
-(define-operator (sqrt sqrt.c complex) complex
+(define-operator-impl (sqrt sqrt.c complex) complex
   [fl sqrt] [bf bf-complex-sqrt] [ival #f])
 
-(define-operator (complex complex binary64 binary64) complex
+(define-operator-impl (complex complex binary64 binary64) complex
   [fl make-rectangular])
 
-(define-operator (re re complex) binary64
+(define-operator-impl (re re complex) binary64
   [fl real-part])
 
-(define-operator (im im complex) binary64
+(define-operator-impl (im im complex) binary64
   [fl imag-part])
 
-(define-operator (conj conj complex) complex
+(define-operator-impl (conj conj complex) complex
   [fl conjugate])
 
 (define-ruleset commutativity.c (arithmetic simplify fp-safe complex)
