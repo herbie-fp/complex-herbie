@@ -33,16 +33,16 @@
   [nonffi (const 0+1i)]
   [ival #f])
 
-(define-operator complex
+(define-operator (complex real real) complex
   [bf bigcomplex] [ival #f] [nonffi make-rectangular])
 
-(define-operator re
+(define-operator (re complex) real
   [bf bigcomplex-re] [ival #f] [nonffi real-part])
 
-(define-operator im
+(define-operator (im complex) real
   [bf bigcomplex-im] [ival #f] [nonffi imag-part])
 
-(define-operator conj
+(define-operator (conj complex) complex
   [bf bf-complex-conjugate] [ival #f] [nonffi conjugate])
 
 ;; Implementations
@@ -53,7 +53,7 @@
 (define-operator-impl (+ +.c complex complex) complex
   [fl +] [bf bf-complex-add] [ival #f])
 
-(define-operator-impl (- neg.c complex) complex
+(define-operator-impl (neg neg.c complex) complex
   [fl -] [bf bf-complex-neg] [ival #f])
 
 (define-operator-impl (- -.c complex complex) complex
