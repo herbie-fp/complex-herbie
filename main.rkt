@@ -28,9 +28,8 @@
 
 ;; Abstract complex constants and ops
 
-(define-constant I
+(define-operator (I) complex
   [bf (λ () (bigcomplex 0.bf 1.bf))]
-  [nonffi (const 0+1i)]
   [ival #f])
 
 (define-operator (complex real real) complex
@@ -47,7 +46,7 @@
 
 ;; Implementations
 
-(define-constant-impl (I I) complex
+(define-operator-impl (I I) complex
   [fl (const 0+1i)])
 
 (define-operator-impl (+ +.c complex complex) complex
